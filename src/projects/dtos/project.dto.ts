@@ -81,7 +81,6 @@ export class ProjectCreateDto extends ProjectBaseDto {
 
   @IsNotEmpty()
   factoryAddress: string;
-
   
   @IsNotEmpty()
   matchers: string[];
