@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { IsNotEmpty, IsNumber, Min, Max } from 'class-validator';
+import { IsNotEmpty, IsNumber, Min, Max, ArrayNotEmpty, IsString } from 'class-validator';
 
 class ProjectBaseDto {
   @ApiProperty({
@@ -21,6 +21,35 @@ class ProjectBaseDto {
     description: '相关配置',
   })
   config: any;
+
+  @ApiProperty({
+    example: '',
+    description: '项目状态',
+  })
+  status: string;
+
+
+  @ApiProperty({
+    example: '',
+    description: 'final byteCode',
+  })
+  byteCode: string;
+
+  @ApiProperty({
+    example: '',
+    description: '工厂地址',
+  })
+  factoryAddress: string;
+
+  @ApiProperty({
+    example: '["88888888", "/99999999/"]',
+    description: 'matchers',
+  })
+  @IsNotEmpty()
+  @ArrayNotEmpty()
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
+  matchers: string[];
 
 
   @ApiProperty({
@@ -48,7 +77,14 @@ export class ProjectCreateDto extends ProjectBaseDto {
   ownerAddress: string;
 
   @IsNotEmpty()
-  config: any;
+  byteCode: string;
+
+  @IsNotEmpty()
+  factoryAddress: string;
+
+  
+  @IsNotEmpty()
+  matchers: string[];
 
   @IsNumber()
   @Min(1)
