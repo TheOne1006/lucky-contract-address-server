@@ -3,3 +3,4 @@
 .avoscloud/
 .leancloud/
 node_modules/
+.env

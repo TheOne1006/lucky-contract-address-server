@@ -62,7 +62,7 @@ export class ProjectController {
   ): Promise<ProjectDto> {
     const instance = await this.service.create(dto);
 
-    return instance ;
+    return instance;
   }
 
   @Put()
@@ -83,14 +83,16 @@ export class ProjectController {
   @SerializerClass(ProjectDto)
   async updateByPk(
     @Param('id') pk: string,
-    @Query('ownerAddress') ownerAddress: string = "0x00",
+    @Query('ownerAddress') ownerAddress: string = `"0x00"`,
     @Body() dto: ProjectUpdateDto,
   ): Promise<ProjectDto> {
-
-    const newIns = await this.service.updateOne({
-      pk,
-      ownerAddress,
-    }, { ...dto });
+    const newIns = await this.service.updateOne(
+      {
+        id: pk,
+        ownerAddress,
+      },
+      { ...dto },
+    );
 
     return newIns;
   }
@@ -135,7 +137,7 @@ export class ProjectController {
   async list(
     @ExpressResponse() res: Response,
     @Query() where: ProjectQueryWhereDto = {},
-    @Query('ownerAddress') ownerAddress: string = "0x00",
+    @Query('ownerAddress') ownerAddress: string = '0x00',
     @Query('_start', ParseInt) start?: number,
     @Query('_end', ParseInt) end?: number,
     @Query('_sort') sort?: string,
