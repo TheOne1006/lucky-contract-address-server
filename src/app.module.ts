@@ -10,20 +10,22 @@ import { CoreModule } from './core/core.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProjectModule } from './projects/projects.module';
-import { 
+import {
   WorkerModule,
   WorkerController,
-  ProjectWorkerController
- } from './workers';
+  ProjectWorkerController,
+} from './workers';
+
+import { ResultModule, ProjectResultController } from './results';
 
 @Module({
-  imports: [
-    CoreModule,
-    ProjectModule,
-    WorkerModule
+  imports: [CoreModule, ProjectModule, WorkerModule, ResultModule],
+  controllers: [
+    AppController,
+    WorkerController,
+    ProjectWorkerController,
+    ProjectResultController,
   ],
-  controllers: [AppController, WorkerController,
-    ProjectWorkerController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

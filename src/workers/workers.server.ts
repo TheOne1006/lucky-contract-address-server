@@ -21,5 +21,4 @@ export class WorkerService extends LeanCloudBaseService<
   constructor() {
     super(MODEL_NAME);
   }
-
 }

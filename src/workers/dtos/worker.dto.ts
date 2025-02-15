@@ -28,13 +28,17 @@ class WorkerBaseDto {
   })
   currentSalt: string;
 
+  @ApiProperty({
+    example: '',
+    description: '结束的 slat 值',
+  })
+  endSalt: string;
 
   @ApiProperty({
     example: '',
     description: '顺序 不保证统一',
   })
   order: number;
-
 
   @ApiProperty({
     example: '',
@@ -59,7 +63,7 @@ export class WorkerCreateDto extends WorkerBaseDto {
 
   @IsNotEmpty()
   currentSalt: string;
-  
+
   @IsNotEmpty()
   startSalt: string;
 
