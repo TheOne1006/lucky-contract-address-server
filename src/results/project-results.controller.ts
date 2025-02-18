@@ -43,6 +43,9 @@ export class ProjectResultController {
     const factoryAddress = getAddress(project.get('factoryAddress'));
     const address = getAddress(input_address);
 
+    // 0xbB31A847523d90da41cf401F2a47C8c6265612A9
+    // 000000000000000000000000000000000000000000000000000000000eed9f63
+    // 9321767907605791c01b983e9c27cf223e12e6b6798a4e9d1bf6052b89b9ddf9
     const encodedData = encodePacked(
       ['bytes1', 'address', 'bytes32', 'bytes32'],
       ['0xff', factoryAddress, salt as `0x${string}`, byteCodeHash],
@@ -83,8 +86,9 @@ export class ProjectResultController {
     @Body() dto: ResultCreateDto,
     // @User() user: RequestUser,
   ): Promise<ResultDto> {
-    const { salt, address: _address } = dto;
+    const { salt: _salt, address: _address } = dto;
     const address = input_2_hex(_address);
+    const salt = input_2_hex(_salt);
 
     const project = await this.projectService.findByPk(pk);
 
