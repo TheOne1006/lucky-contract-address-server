@@ -68,12 +68,19 @@ export class ProjectResultController {
     salt: ResultCreateDto['salt'],
     address: ResultCreateDto['address'],
   ): Promise<ResultDto> {
-    const instance = await this.resultService.create({
-      salt,
-      address,
-      projectId: project.id,
-    });
-    return instance;
+    try {
+      const instance = await this.resultService.create({
+        salt,
+        address,
+        projectId: project.id,
+      });
+      return instance;
+    } catch (error) {
+      this.logger.error(
+        `projectId: ${project.id},salt: ${salt}, address: ${address}, error: ${error}`,
+      );
+      throw error;
+    }
   }
 
   @Post('/:pk/luckAddress')
@@ -100,6 +107,8 @@ export class ProjectResultController {
     }
 
     this.checkOnServer(project, salt, address);
+
+    this._setResult(project, salt, address);
 
     return {
       salt,
