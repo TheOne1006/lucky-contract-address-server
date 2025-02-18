@@ -8,6 +8,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AV } from '../common/leancloud';
+import { input_2_hex } from '../utils/hex';
 
 import {
   ApiOperation,
@@ -176,15 +177,18 @@ export class ProjectWorkerController {
 
   @Get('/:pk/updateSalt/:startSalt/:currentSalt')
   @ApiOperation({
-    summary: '更新 worker 数量',
+    summary: '更新 currentSalt',
   })
   @SerializerClass(WorkerDto)
   async updateSalt(
     @Param('pk') pk: string,
-    @Param('startSalt') startSalt: string,
-    @Param('currentSalt') currentSalt: string,
+    @Param('startSalt') _startSalt: string,
+    @Param('currentSalt') _currentSalt: string,
     // @User() user: RequestUser,
   ): Promise<WorkerDto> {
+    const startSalt = input_2_hex(_startSalt);
+    const currentSalt = input_2_hex(_currentSalt);
+
     const worker = await this.workerService.findOne({
       projectId: pk,
       startSalt,

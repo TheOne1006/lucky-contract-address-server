@@ -8,6 +8,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AV } from '../common/leancloud';
+import { input_2_hex } from '../utils/hex';
 
 import {
   ApiOperation,
@@ -82,7 +83,8 @@ export class ProjectResultController {
     @Body() dto: ResultCreateDto,
     // @User() user: RequestUser,
   ): Promise<ResultDto> {
-    const { salt, address } = dto;
+    const { salt, address: _address } = dto;
+    const address = input_2_hex(_address);
 
     const project = await this.projectService.findByPk(pk);
 

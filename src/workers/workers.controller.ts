@@ -46,7 +46,6 @@ import {
   WorkerUpdateDto,
 } from './dtos';
 
-
 @UseGuards(RolesGuard)
 @Roles(ROLE_ADMIN)
 @Controller('api/workers')
@@ -55,7 +54,6 @@ import {
 export class WorkerController {
   private readonly logger = new Logger('app:WorkerController');
   constructor(protected readonly service: WorkerService) {}
-
 
   @Post()
   @ApiOperation({
@@ -68,7 +66,7 @@ export class WorkerController {
   ): Promise<WorkerDto> {
     const instance = await this.service.create(dto);
 
-    return instance ;
+    return instance;
   }
 
   @Put()
@@ -85,9 +83,7 @@ export class WorkerController {
     @Param('id') pk: string,
     @Body() dto: WorkerUpdateDto,
   ): Promise<WorkerDto> {
-
     const newIns = await this.service.updateByPk(pk, { ...dto });
-
     return newIns;
   }
 
@@ -146,7 +142,7 @@ export class WorkerController {
 
     const eqMapper = {
       ...where,
-      ...ownerAddress ? { ownerAddress } : {},
+      ...(ownerAddress ? { ownerAddress } : {}),
     };
 
     const list = await this.service.findAll(
