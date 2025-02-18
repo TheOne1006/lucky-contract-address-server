@@ -66,8 +66,9 @@ export class ProjectWorkerController {
       { length: processSplit },
       (_, i) => BigInt(i) * workerSize + 1n,
     );
+    // 0x1000000000000000000000000000000000000000000000000000000000000000
     const allStartSaltStrings = allStartSalt.map(
-      (salt) => `0x${salt.toString(16)}`,
+      (salt) => `0x${salt.toString(16).padStart(64, '0')}`,
     );
 
     const eqMapper = {
