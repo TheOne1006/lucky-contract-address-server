@@ -208,7 +208,8 @@ export class ProjectWorkerController {
     const prevUpdatedAt = new Date(worker.get('updatedAt')).getTime();
     const now = new Date().getTime();
     // 每分钟的 hash 数量
-    const hashRateMin = hashSaltCountInt / (now - prevUpdatedAt) / (60 * 1000);
+    const hashRateMin =
+      (hashSaltCountInt / (now - prevUpdatedAt)) * (60 * 1000);
 
     const instance = await this.workerService.updateByInstance(worker, {
       currentSalt,
