@@ -45,6 +45,12 @@ class WorkerBaseDto {
     description: '状态',
   })
   status: string;
+
+  @ApiProperty({
+    example: '',
+    description: '每分钟算力',
+  })
+  rateMin: number;
 }
 
 /**

@@ -101,6 +101,7 @@ export class ProjectWorkerController {
           order: index + 1,
           projectId: project.id,
           status: 'waiting',
+          rateMin: 0,
           endSalt,
         });
         createWorkers.push(newWorker);
@@ -199,9 +200,20 @@ export class ProjectWorkerController {
       throw new Error(`Worker ${startSalt} not found`);
     }
 
+    const prevCurrentSalt = worker.get('currentSalt');
+
+    const hashSaltCount = BigInt(currentSalt) - BigInt(prevCurrentSalt);
+    const hashSaltCountInt = Number(hashSaltCount);
+
+    const prevUpdatedAt = new Date(worker.get('updatedAt')).getTime();
+    const now = new Date().getTime();
+    // 每分钟的 hash 数量
+    const hashRateMin = hashSaltCountInt / (now - prevUpdatedAt) / (60 * 1000);
+
     const instance = await this.workerService.updateByInstance(worker, {
       currentSalt,
       v: worker.get('v') + 1,
+      rateMin: hashRateMin,
     } as WorkerUpdateDto);
     return instance;
   }
